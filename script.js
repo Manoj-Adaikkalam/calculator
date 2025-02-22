@@ -1,5 +1,4 @@
 
-
 let var1;
 let opr;
 let var2;
@@ -31,6 +30,10 @@ function div(a,b) {
     return divres;
 }
 
+function per(a,b){
+    let divr = Math.round((a/100)*100)/100;
+    return divr*b;
+}
 /*function operate(var1,var2,opr){
     if (opr == "+"){
       add(var1,var2);
@@ -70,17 +73,21 @@ document.querySelector("#a").addEventListener("click",function(){ip1.value+="+";
 document.querySelector("#s").addEventListener("click",function(){ip1.value+="-";ip1.focus()})
 document.querySelector("#p").addEventListener("click",function(){ip1.value+="x";ip1.focus()})
 document.querySelector("#d").addEventListener("click",function(){ip1.value+="/";ip1.focus()})
+document.querySelector("#per").addEventListener("click",function(){ip1.value+="%";ip1.focus()})
+
+
 
 document.querySelector("#equ").addEventListener("click",calc)
+document.querySelector("#bs").addEventListener("click",bs)
 
 
 
 function calc(){
     let res = document.querySelector("#ip");
 
-    let nos = res.value.split(/[\+\-\x\/]/).map(Number);
+    let nos = res.value.split(/[\+\-\x\/\%]/).map(Number);
     console.log(nos);
-    let ops = res.value.match(/[\+\-\x\/]/g);
+    let ops = res.value.match(/[\+\-\x\/\%]/g);
     console.log(ops);
 
     let res1 = nos[0];
@@ -103,8 +110,26 @@ function calc(){
         else if(op=="/"){
             res1 = div(res1,nos[i+1])
         }
+
+        else if(op=="%"){
+            res1 = per(res1,nos[i+1])
+        }
     }
 
     res.value = res1;
 
 }
+
+function bs(){
+    let res_bs = document.querySelector("#ip");
+    let res_s = res_bs.value.slice(0,-1);
+    res_bs.value = res_s;
+}
+
+const ip2 = document.querySelector("#ip");
+
+ip2.addEventListener("keypress",function(event){
+    if (event.key == "Enter"){
+        calc()
+    }
+})
